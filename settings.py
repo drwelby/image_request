@@ -11,7 +11,8 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE':'django.contrib.gis.db.backends.postgis',
+        #'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'postgis',                      # Or path to database file if using sqlite3.
         'USER': 'postgis',                      # Not used with sqlite3.
         'PASSWORD': 'postgis',                  # Not used with sqlite3.
@@ -100,7 +101,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'hiu.urls'
+ROOT_URLCONF = 'image_request.urls'
 
 import os.path
 
@@ -117,10 +118,12 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Uncomment the next line to enable the admin:
-     'django.contrib.admin',
+    'django.contrib.admin',
+    'django.contrib.gis',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'hiu.rfi',
+    'rfi',
+    'ga_ows',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -145,3 +148,7 @@ LOGGING = {
         },
     }
 }
+try:
+    from local_settings import *
+except ImportError:
+    pass
