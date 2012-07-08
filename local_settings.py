@@ -1,6 +1,10 @@
 #Base url for GeoServer (no trailing slash)
 
-GEOSERVER_BASE_URL = "http://localhost:5432"
+GEOSERVER_BASE_URL = "http://localhost:8080"
+
+GEOSERVER_USER = "admin"
+
+GEOSERVER_PASSWORD = "geoserver"
 
 # Eventually we'll set these in Geoserver via restconfig
 
@@ -15,4 +19,4 @@ DATASTORE = "rfi"
 
 # Layer that represents the RequestForImage model/table
 
-FEATURE = "rfi_RequestForImagery"
+FEATURE = "rfi_requestforimagery"

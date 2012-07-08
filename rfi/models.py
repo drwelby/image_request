@@ -1,6 +1,9 @@
 from django.contrib.gis.db import models
 from django.db.models import signals
 import requests
+from requests.auth import HTTPBasicAuth
+
+from local_settings import GEOSERVER_USER, GEOSERVER_PASSWORD
 from local_settings import GEOSERVER_BASE_URL,WORKSPACE,DATASTORE,FEATURE
 
 class RequestForImagery(models.Model):
@@ -53,16 +56,33 @@ class RequestForImagery(models.Model):
 
     objects = models.GeoManager()
 
-def updatebounds():
+def updateboundshandler(sender=None, **kwargs):
+
+    if sender is RequestForImagery:
+        updatebounds()
+
+def updatebounds(sender=None, **kwargs):
     # construct url from local_settings.py
-    # later we'll just configure geoserver through REST
+    # later we'll also configure geoserver through REST
     #
-    payload = {'recalculate':'nativebbox,latlonbbox'}
-    url = "%s/workspaces/%s/datastores/%s/featuretypes/%s" % (WORKSPACE,DATASTORE,FEATURE)
+    # curl -u admin:geoserver -i -XPUT -H 'Content-type: text/xml'
+    # -d '<featureType><name>rfi_requestforimagery</name><projectionPolicy>FORCE_DECLARED</projectionPolicy></featureType>'
+    # http://192.168.244.151:8080/geoserver/rest/workspaces/rfi/datastores/rfi/featuretypes/rfi_requestforimagery.xml
+
+    #payload = {'recalculate':'nativebbox,latlonbbox'}
+
+    url = "%s/geoserver/rest/workspaces/%s/datastores/%s/featuretypes/%s.xml" % (GEOSERVER_BASE_URL,WORKSPACE,DATASTORE,FEATURE)
+
+    files = {'file': ('rfi_requestforimagery.xml', '<featureType><name>rfi_requestforimagery</name><projectionPolicy>FORCE_DECLARED</projectionPolicy></featureType>')}
+    
+    headers = {'Content-type': 'text/xml'}
+    
+    print url
 
     #PUT the request
-    r = requests.put(url, params=payload)
+    r = requests.put(url, files=files, headers=headers, auth=HTTPBasicAuth(GEOSERVER_USER, GEOSERVER_PASSWORD))
     # handle the response
     r.raise_for_status()
 
-signals.post_save.connect(updatebounds)
+#signals.post_save.connect(updateboundshandler)
+#signals.post_delete.connect(updateboundshandler)

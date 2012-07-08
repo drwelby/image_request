@@ -1,10 +1,5 @@
 from django.conf.urls.defaults import patterns, include, url
-from ga_ows.views.wfs import WFS
 
-from rfi import models as m
-#from rfi.models import RequestForImagery
-
-# Uncomment the next two lines to enable the admin:
 from django.contrib.gis import admin
 admin.autodiscover()
 
