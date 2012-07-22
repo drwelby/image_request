@@ -1,8 +1,7 @@
 from django.contrib.gis.db import models
 from django.db.models import signals
 import requests
-from requests.auth import HTTPBasicAuth
-
+import sys
 from local_settings import GEOSERVER_USER, GEOSERVER_PASSWORD
 from local_settings import GEOSERVER_BASE_URL,WORKSPACE,DATASTORE,FEATURE
 
@@ -69,20 +68,21 @@ def updatebounds(sender=None, **kwargs):
     # -d '<featureType><name>rfi_requestforimagery</name><projectionPolicy>FORCE_DECLARED</projectionPolicy></featureType>'
     # http://192.168.244.151:8080/geoserver/rest/workspaces/rfi/datastores/rfi/featuretypes/rfi_requestforimagery.xml
 
-    #payload = {'recalculate':'nativebbox,latlonbbox'}
+    print "updating bounds"
 
-    url = "%s/geoserver/rest/workspaces/%s/datastores/%s/featuretypes/%s.xml" % (GEOSERVER_BASE_URL,WORKSPACE,DATASTORE,FEATURE)
+    url = "%s/geoserver/rest/workspaces/%s/datastores/%s/featuretypes/%s.xml" \
+            % (GEOSERVER_BASE_URL,WORKSPACE,DATASTORE,FEATURE)
 
-    files = {'file': ('rfi_requestforimagery.xml', '<featureType><name>rfi_requestforimagery</name><projectionPolicy>FORCE_DECLARED</projectionPolicy></featureType>')}
+    data = '''<featureType>
+                <name>rfi_requestforimagery</name>
+                <projectionPolicy>FORCE_DECLARED</projectionPolicy>
+                </featureType>'''
     
     headers = {'Content-type': 'text/xml'}
     
-    print url
-
-    #PUT the request
-    r = requests.put(url, files=files, headers=headers, auth=HTTPBasicAuth(GEOSERVER_USER, GEOSERVER_PASSWORD))
+    r = requests.put(url, data=data, headers=headers, auth=(GEOSERVER_USER, GEOSERVER_PASSWORD))
     # handle the response
     r.raise_for_status()
 
-#signals.post_save.connect(updateboundshandler)
-#signals.post_delete.connect(updateboundshandler)
+signals.post_save.connect(updateboundshandler)
+signals.post_delete.connect(updateboundshandler)
