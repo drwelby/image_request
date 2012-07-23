@@ -65,13 +65,16 @@ def triggerupdate(request):
 def updateboundshandler(sender=None, **kwargs):
 
     if sender is RequestForImagery:
+        # Make sure the datastore has the "Estimated Extends" box unchecked,
+        # otherwise you will have to deal with this:
+        #
         # https://jira.codehaus.org/browse/GEOS-5233
         # In the event ANALYZE has ever been run on the table,
         # we have to update the statistics first.
-
-        cursor = connection.cursor();
-        cursor.execute("ANALYZE %s;" % FEATURE)
-        transaction.commit_unless_managed()
+        #
+        #cursor = connection.cursor();
+        #cursor.execute("ANALYZE %s;" % FEATURE)
+        #transaction.commit_unless_managed()
         updatebounds()
 
 def updatebounds():
