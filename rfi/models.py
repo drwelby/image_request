@@ -44,7 +44,7 @@ class RequestForImagery(models.Model):
             )
     delivery_format = models.TextField(max_length=5, choices=DELIVERY_FORMATS,blank=True)
 
-    need_by_date = models.DateTimeField(blank=True)
+    need_by_date = models.DateTimeField(blank=True, null = True)
 
     PRIORITIES = (
             ('high', 'High'),

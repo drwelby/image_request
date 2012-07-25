@@ -4,7 +4,7 @@ from django.contrib.gis import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^$', include('image_request.rfi.urls')),
+    url(r'^rfi/', include('image_request.rfi.urls')),
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
