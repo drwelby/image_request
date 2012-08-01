@@ -22,7 +22,6 @@ class RFIValidation(Validation):
         if polyjson is None:
             errors['bounds'] = ['REQUEST BOUNDS REQUIRED']
             return errors
-        print polyjson.__class__, polyjson
         try:
             poly = GEOSGeometry(polyjson)
         except:
