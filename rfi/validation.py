@@ -32,7 +32,7 @@ class RFIValidation(Validation):
             errors['bounds'] = ['REQUEST BOUNDS NOT A POLYGON']
             return errors
         (xmin, ymin, xmax, ymax) = poly.extent
-        if not ymin < -90 or \
+        if ymin < -90 or \
                 ymax > 90 or \
                 xmin < -180 or \
                 xmax > 180:
