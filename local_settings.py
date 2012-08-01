@@ -20,3 +20,11 @@ DATASTORE = "rfi"
 # Layer that represents the RequestForImage model/table
 
 FEATURE = "rfi_requestforimagery"
+
+# PostGIS settings
+
+PG_HOST = "localhost"
+PG_PORT = "5432"
+PG_DATABASE = 
+PG_USER =
+PG_PASSWORD = 
