@@ -25,6 +25,3 @@ FEATURE = "rfi_requestforimagery"
 
 PG_HOST = "localhost"
 PG_PORT = "5432"
-PG_DATABASE = 
-PG_USER =
-PG_PASSWORD = 
