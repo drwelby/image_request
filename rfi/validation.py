@@ -1,5 +1,6 @@
 from tastypie.validation import Validation
 from django.contrib.gis.geos import GEOSGeometry
+import json
 
 
 class RFIValidation(Validation):
@@ -18,11 +19,12 @@ class RFIValidation(Validation):
         if 'bounds' not in d:
             errors['bounds'] = ['REQUEST BOUNDS REQUIRED']
             return errors
-        polyjson = str(d['bounds'])
+        polyjson = json.dumps(d['bounds'])
         if polyjson is None:
             errors['bounds'] = ['REQUEST BOUNDS REQUIRED']
             return errors
         try:
+            print type(polyjson)
             poly = GEOSGeometry(polyjson)
         except:
             errors['bounds'] = ['INVALID GEOMETRY']
