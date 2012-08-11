@@ -44,6 +44,7 @@ class Command(BaseCommand):
                     <user>%s</user>
                     <passwd>%s</passwd>
                     <dbtype>postgis</dbtype>
+                    <Expose primary keys>true</Expose primary keys>
                     <Estimated extends>false</Estimated extends>
                   </connectionParameters>
                 </dataStore>''' % (DATASTORE, PG_HOST, PG_PORT, PG_DATABASE, PG_USER, PG_PASSWORD)
@@ -59,6 +60,20 @@ class Command(BaseCommand):
 
         data = ''''<featureType>
                     <name>%s</name>
+                        <nativeBoundingBox>
+                           <minx>-180</minx>
+                           <maxx>180</maxx>
+                           <miny>-90</miny>
+                           <maxy>90</maxy>
+                           <crs>EPSG:4326</crs>
+                        </nativeBoundingBox>
+                        <latLonBoundingBox>
+                           <minx>-180</minx>
+                           <maxx>180</maxx>
+                           <miny>-90</miny>
+                           <maxy>90</maxy>
+                           <crs>EPSG:4326</crs>
+                        </latLonBoundingBox>
                     </featureType>''' % (FEATURE)
 
         try:
