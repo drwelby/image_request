@@ -1,0 +1,9 @@
+{% extends 'rfi/bootstrap_base.html' %}
+{% block title %}HIU Image Request App{% endblock %}
+{% block content %}
+<h1>New Image Request</h1>
+<form action="/rfi/new/" method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit" />
+</form>
+{% endblock %}

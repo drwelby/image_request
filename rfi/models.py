@@ -1,5 +1,7 @@
 from django.contrib.gis.db import models
+from django.forms import CharField, ModelForm
 from django.db.models import signals
+from olwidget.widgets import EditableMap
 from local_settings import GEOSERVER_USER, GEOSERVER_PASSWORD
 from local_settings import GEOSERVER_BASE_URL,WORKSPACE,DATASTORE,FEATURE
 
@@ -57,6 +59,11 @@ class RequestForImagery(models.Model):
 
     objects = models.GeoManager()
 
+class RequestForm(ModelForm):
+    bounds = CharField(widget=EditableMap({'geometry':'polygon'}))
+    class Meta:
+        model = RequestForImagery
+        
 def triggerupdate(request):
     # in case you want to trigger an update from a view as a test
     updateboundshandler(sender=RequestForImagery)
