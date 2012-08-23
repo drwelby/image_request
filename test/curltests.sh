@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Get the API
-# curl -v http://localhost:8000/rfi/api
+ curl -v http://localhost:8000/rfi/api
 
 # Add add a request
 curl --dump-header - -H "Content-Type: application/json" -X POST --data '{"bounds": {"coordinates": [[[30, 11], [30, 9], [31, 9], [31, 11], [30, 11]]], "type": "Polygon"}, "requestor_name": "Curl Request"}'  http://localhost:8000/rfi/api/rfi/
@@ -20,3 +20,7 @@ curl --dump-header - -H "Content-Type: application/json" -X POST --data '{"bound
 
 # Test - request bounds must be valid geographic coordinates
 #curl --dump-header - -H "Content-Type: application/json" -X POST --data '{"bounds": {"coordinates": [[[30, 11], [300, 9], [31, 9], [31, 11], [30, 11]]], "type": "Polygon"}, "requestor_name": "Curl Request"}'  http://localhost:8000/rfi/api/rfi/
+
+# Add add a request
+#curl --dump-header - -H "Content-Type: application/json" -X POST --data '{"bounds": "https://dl.dropbox.com/u/21330364/api.json", "requestor_name": "Curl Request with foreign object geo"}'  http://localhost:8000/rfi/api/rfi/
+

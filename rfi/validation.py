@@ -1,5 +1,7 @@
 from tastypie.validation import Validation
 from django.contrib.gis.geos import GEOSGeometry
+from urllib2 import urlopen
+from rfi.tools import getpoly
 import json
 
 
@@ -18,24 +20,21 @@ class RFIValidation(Validation):
         #Must have a valid bbox
         if 'bounds' not in d:
             errors['bounds'] = ['REQUEST BOUNDS REQUIRED']
-            return errors
-        polyjson = json.dumps(d['bounds'])
-        if polyjson is None:
+        if d['bounds'] is None:
             errors['bounds'] = ['REQUEST BOUNDS REQUIRED']
-            return errors
+        polyjson = json.dumps(d['bounds'])
         try:
-            print type(polyjson)
+            print type(d['bounds'])
             poly = GEOSGeometry(polyjson)
         except:
             errors['bounds'] = ['INVALID GEOMETRY']
-            return errors
         if poly.geom_typeid != 3:
             errors['bounds'] = ['REQUEST BOUNDS NOT A POLYGON']
-            return errors
         (xmin, ymin, xmax, ymax) = poly.extent
         if ymin < -90 or \
                 ymax > 90 or \
                 xmin < -180 or \
                 xmax > 180:
-            return {'bounds': 'INVALID BOUNDS'}
+            errors['bounds'] = ['INVALID BOUNDS']
+        return errors 
 

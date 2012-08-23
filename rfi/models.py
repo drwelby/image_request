@@ -9,6 +9,11 @@ import requests
 from django.http import HttpResponse
 from django.db import connection, transaction
 
+class TestArea(models.Model):
+    name = models.CharField(max_length=50)
+    geom = models.PolygonField()
+    objects = models.GeoManager()
+
 class RequestForImagery(models.Model):
     requestor_name = models.CharField(max_length=50)
     requestor_email = models.EmailField(blank=True)
