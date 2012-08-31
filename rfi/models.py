@@ -92,6 +92,7 @@ def updatebounds():
 
     data = '''<featureType>
                 <name>rfi_requestforimagery</name>
+                <enabled>true</enabled>
                 </featureType>'''
     
     headers = {'Content-type': 'text/xml'}

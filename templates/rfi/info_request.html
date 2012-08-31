@@ -1,0 +1,78 @@
+{% extends 'rfi/bootstrap_base.html' %}
+{% block title %}HIU Image Request App{% endblock %}
+{% block content %}
+<h1>Image Request</h1>
+<h2>Requestor Information</h2>
+<table class="table-striped">
+  <tr>
+      <td><b>Name</b></td>
+      <td>{{ rfi.requestor_name }}</td>
+  </tr>
+  <tr>
+      <td><b>Email</b></td>
+      <td>{{ rfi.requestor_email }}</td>
+  </tr>
+  <tr>
+      <td><b>Phone</b></td>
+      <td>{{ rfi.requestor_phone }}</td>
+  </tr>
+  <tr>
+      <td><b>Organization Type</b></td>
+      <td>{{ rfi.org_choice }}</td>
+  </tr>
+</table>
+<h2>Request Details</h2>
+<table class="table-striped">
+  <tr>
+      <td><b>Supported Operation</b></td>
+      <td>{{ rfi.supported_operation }}</td>
+  </tr>
+  <tr>
+      <td><b>Supported Partners</b></td>
+      <td>{{ rfi.supported_partners }}</td>
+  </tr>
+  <tr>
+      <td><b>Reason For Use</b></td>
+      <td>{{ rfi.reason_for_use }}</td>
+  </tr>
+  <tr>
+      <td><b>Objective</b></td>
+      <td>{{ rfi.objective}}</td>
+  </tr>
+  <tr>
+      <td><b>Justification</b></td>
+      <td>{{ rfi.justification }}</td>
+  </tr>
+  <tr>
+      <td><b>Start Date</b></td>
+      <td>{{ rfi.start_date }}</td>
+  </tr>
+  <tr>
+      <td><b>End Date</b></td>
+      <td>{{ rfi.end_date }}</td>
+  </tr>
+</table>
+<h2>Image Details</h2>
+    <table class="table-striped">
+        <tr>
+            <td><b>Image Format</b></td>
+            <td>{{ rfi.img_format }}</td>
+        </td>
+        <tr>
+            <td><b>Delivery Format</b></td>
+            <td>{{ rfi.delivery_format }}</td>
+        </tr>
+        <tr>
+            <td><b>Need-By Date</b></td>
+            <td>{{ rfi.need_by_date }}</td>
+        </tr>
+        <tr>
+            <td><b>Priority</b></td>
+            <td>{{ rfi.priority }}</td>
+        </tr>
+        <tr>
+            <td><b>NextView Acknowledgement</b></td>
+            <td>{{ rfi.nextview_ack }}</td>
+        </tr>
+    </table>
+{% endblock %}
