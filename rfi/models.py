@@ -98,10 +98,13 @@ def updatebounds():
     
     r = requests.put(url, data=data, headers=headers, auth=(GEOSERVER_USER, GEOSERVER_PASSWORD))
     # handle the response
-    r.raise_for_status()
+    try:
+        r.raise_for_status()
+    except:
+        raise Exception("Geoserver error when updating bounds")
 
 # Connect the save and delete signals
 # DOESN'T WORK WITH SAVES FROM THE ADMIN!
-
-signals.post_save.connect(updateboundshandler)
-signals.post_delete.connect(updateboundshandler)
+# Actually, it's probably easier just to set the bounds of the layer to the whole globe
+#signals.post_save.connect(updateboundshandler)
+#signals.post_delete.connect(updateboundshandler)
