@@ -1,6 +1,6 @@
 from rfi.models import RequestForImagery, RequestForm
 from django.shortcuts import render, render_to_response, get_object_or_404
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 
 def request_info(request, pk):
     try:
@@ -10,8 +10,20 @@ def request_info(request, pk):
     return render_to_response('rfi/info_request.html', {'rfi': rfi})
 
 def info_window(request, pk):
+    if request.method.upper() == 'OPTIONS':
+        r = HttpResponse()
+        r['Access-Control-Allow-Origin'] = '*'
+        r['Access-Control-Allow-Headers'] = 'Authorization, X-Requested-With'
+        r['Access-Control-Allow-Methods'] = 'GET,OPTIONS'
+        r['Access-Control-Allow-Credentials'] = 'true'
+        return r
+
     rfi = get_object_or_404(RequestForImagery, pk=int(pk))
-    return render_to_response('rfi/info_window.html', {'rfi': rfi})
+    r = render_to_response('rfi/info_window.html', {'rfi': rfi})
+    # cross-domain headers
+    r['Access-Control-Allow-Origin'] = '*'
+    r['Access-Control-Allow-Headers'] = 'Authorization'
+    return r
 
 def new_request(request):
     if request.method == 'POST':
@@ -21,7 +33,7 @@ def new_request(request):
             return HttpResponseRedirect('/rfi/complete/')
 
     else:
-        form = RequestForm()
+        form = RequestForm(initial = request.GET)
 
     return render(request, 'rfi/new.html', {'form': form})
 
