@@ -43,13 +43,13 @@ class RequestForImagery(models.Model):
             ('tif', 'GeoTIFF'),
             ('jpg', 'JPG2000'),
             )
-    img_format = models.TextField(max_length=5, choices=IMG_FORMATS, blank=True)
+    img_format = models.CharField(max_length=5, choices=IMG_FORMATS, blank=True)
 
     DELIVERY_FORMATS = (
             ('disk', 'Disk'),
             ('ftp', 'FTP'),
             )
-    delivery_format = models.TextField(max_length=5, choices=DELIVERY_FORMATS,blank=True)
+    delivery_format = models.CharField(max_length=5, choices=DELIVERY_FORMATS,blank=True)
 
     need_by_date = models.DateTimeField(blank=True, null = True)
 
@@ -63,6 +63,10 @@ class RequestForImagery(models.Model):
     nextview_ack = models.BooleanField(blank=True)
 
     objects = models.GeoManager()
+
+    class Meta:
+        verbose_name = "Request for Imagery"
+        verbose_name_plural = "Requests for Imagery"
 
 class RequestForm(ModelForm):
     bounds = CharField(widget=EditableMap({'geometry':'polygon'}))
