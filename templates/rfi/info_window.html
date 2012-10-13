@@ -1,6 +1,7 @@
+<div class="table-insert">
 <h1>Image Request</h1>
 <h2>Requestor Information</h2>
-<table class="table-striped">
+<table class="table-striped gridtable">
   <tr>
       <td><b>Name</b></td>
       <td>{{ rfi.requestor_name }}</td>
@@ -19,7 +20,7 @@
   </tr>
 </table>
 <h2>Request Details</h2>
-<table class="table-striped">
+<table class="table-striped gridtable">
   <tr>
       <td><b>Supported Operation</b></td>
       <td>{{ rfi.supported_operation }}</td>
@@ -50,7 +51,7 @@
   </tr>
 </table>
 <h2>Image Details</h2>
-    <table class="table-striped">
+    <table class="table-striped gridtable">
         <tr>
             <td><b>Image Format</b></td>
             <td>{{ rfi.img_format }}</td>
@@ -72,3 +73,5 @@
             <td>{{ rfi.nextview_ack }}</td>
         </tr>
     </table>
+</div>
+
