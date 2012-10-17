@@ -25,6 +25,19 @@ def info_window(request, pk):
     r['Access-Control-Allow-Headers'] = 'Authorization'
     return r
 
+def edit_request(request, pk):
+    if request.method == 'POST':
+        form = RequestForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/rfi/complete/')
+
+    else:
+        rfi = get_object_or_404(RequestForImagery, pk=int(pk))
+        form = RequestForm(instance=rfi)
+
+    return render(request, 'rfi/new.html', {'form': form})
+
 def new_request(request):
     if request.method == 'POST':
         form = RequestForm(request.POST)
