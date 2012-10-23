@@ -20,16 +20,20 @@ class RFIValidation(Validation):
         #Must have a valid bbox
         if 'bounds' not in d:
             errors['bounds'] = ['REQUEST BOUNDS REQUIRED']
+            return errors 
         if d['bounds'] is None:
             errors['bounds'] = ['REQUEST BOUNDS REQUIRED']
+            return errors 
         polyjson = json.dumps(d['bounds'])
         try:
             print type(d['bounds'])
             poly = GEOSGeometry(polyjson)
         except:
             errors['bounds'] = ['INVALID GEOMETRY']
+            return errors 
         if poly.geom_typeid != 3:
             errors['bounds'] = ['REQUEST BOUNDS NOT A POLYGON']
+            return errors 
         (xmin, ymin, xmax, ymax) = poly.extent
         if ymin < -90 or \
                 ymax > 90 or \
